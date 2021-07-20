@@ -268,14 +268,8 @@
   :init
   (global-undo-tree-mode 1))
 
-;; (use-package lsp-mode
-   ;;   :commands (lsp lsp-deferred)
-   ;;   :init
-   ;;   (setq lsp-keymap-prefix "C-c l") ;; Or 'C-l' , 's -l'
-   ;;   :config
-   ;;   (lsp-enable-which-key-integration t))
-
-
+(use-package evil-nerd-commenter
+  :bind ("M-A" . evilnc-comment-or-uncomment-lines))
 
 (use-package company
 :ensure t
@@ -315,9 +309,6 @@
 
  (use-package lsp-treemacs
    :after lsp)
-
- ;(use-package company-lsp
- ;:commands company-lsp)
 
 (use-package typescript-mode
 :mode "\\.ts\\'"
@@ -378,17 +369,3 @@
   "gf"  'magit-fetch
   "gF"  'magit-fetch-all
   "gr"  'magit-rebase)
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   (quote
-    (evil-nerd-commenter xterm-color which-key visual-fill-column use-package undo-tree typescript-mode slime rainbow-delimiters phpunit php-mode org-superstar org-bullets lsp-ui lsp-treemacs ivy-rich helpful general forge flycheck evil-collection doom-themes doom-modeline counsel-projectile company-box command-log-mode))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
