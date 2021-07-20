@@ -167,6 +167,12 @@
 (rune/leader-keys
  "ts" '(hydra-text-scale/body :which-key "scale text"))
 
+;; Flex Autopair automatically insert pair braces and quotes,
+;; insertion conditions & actions are highly customizable.
+
+    (require 'flex-autopair)
+    (flex-autopair-mode 1)
+
 (set-frame-parameter (selected-frame) 'alpha '(90 90))
 
 (add-to-list 'default-frame-alist '(alpha 90 90))
@@ -321,9 +327,17 @@
 
  (use-package flycheck)
 
- (use-package lsp-mode
+(use-package lsp-mode
   :config
   (setq lsp-prefer-flymake nil)
+  (setq lsp-clients-angular-language-server-command
+        '("node"
+          "C:/Users/user/AppData/Roaming/npm/node_modules/@angular/language-server"
+          "--ngProbeLocations"
+          "C:/Users/user/AppData/Roaming/npm/node_modules"
+          "--tsProbeLocations"
+          "C:/Users/user/AppData/Roaming/npm/node_modules"
+          "--stdio"))
   :hook (php-mode . lsp)
   :commands lsp)
 
@@ -347,6 +361,10 @@
 
  (use-package lsp-treemacs
    :after lsp)
+
+(require 'treemacs-all-the-icons)
+(treemacs-load-theme "all-the-icons")
+(setq doom-themes-treemacs-theme "doom colors")
 
 (use-package typescript-mode
 :mode "\\.ts\\'"
@@ -407,3 +425,13 @@
   "gf"  'magit-fetch
   "gF"  'magit-fetch-all
   "gr"  'magit-rebase)
+
+(use-package dired
+  :ensure nil
+  :commands (dired dired-jump)
+  :bind (("C-x C-j" . dired-jump))
+  :custom ((dired-listing-switches "-agho --group-directories-first"))
+  :config
+  (evil-collection-define-key 'normal 'dired-mode-map
+    "h" 'dired-single-up-directory
+    "l" 'dired-single-buffer))

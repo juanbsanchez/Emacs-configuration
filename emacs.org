@@ -224,6 +224,18 @@
 
 #+end_src
 
+** Automation
+
+#+begin_src emacs-lisp
+    
+  ;; Flex Autopair automatically insert pair braces and quotes,
+  ;; insertion conditions & actions are highly customizable.
+    
+      (require 'flex-autopair)
+      (flex-autopair-mode 1)
+    
+#+end_src
+
 ** Transparency
 
 #+begin_src emacs-lisp
@@ -449,9 +461,17 @@
   
    (use-package flycheck)
   
-   (use-package lsp-mode
+  (use-package lsp-mode
     :config
     (setq lsp-prefer-flymake nil)
+    (setq lsp-clients-angular-language-server-command
+          '("node"
+            "C:/Users/user/AppData/Roaming/npm/node_modules/@angular/language-server"
+            "--ngProbeLocations"
+            "C:/Users/user/AppData/Roaming/npm/node_modules"
+            "--tsProbeLocations"
+            "C:/Users/user/AppData/Roaming/npm/node_modules"
+            "--stdio"))
     :hook (php-mode . lsp)
     :commands lsp)
   
@@ -475,7 +495,12 @@
   
    (use-package lsp-treemacs
      :after lsp)
-    
+  
+  (require 'treemacs-all-the-icons)
+  (treemacs-load-theme "all-the-icons")
+  (setq doom-themes-treemacs-theme "doom colors")
+  
+  
 #+end_src
 
 *** Typescript
@@ -490,7 +515,7 @@
   
 #+end_src
 
-**** PHP
+*** PHP
 
 #+begin_src emacs-lisp
   
@@ -507,7 +532,6 @@
   (provide 'lang-php)
   
 #+end_src
-
 
 
 ** Projectile
@@ -566,3 +590,20 @@
 #+end_src
 
 
+* File Management
+
+** Dired
+
+#+begin_src emacs-lisp
+  
+  (use-package dired
+    :ensure nil
+    :commands (dired dired-jump)
+    :bind (("C-x C-j" . dired-jump))
+    :custom ((dired-listing-switches "-agho --group-directories-first"))
+    :config
+    (evil-collection-define-key 'normal 'dired-mode-map
+      "h" 'dired-single-up-directory
+      "l" 'dired-single-buffer))
+  
+#+end_src
