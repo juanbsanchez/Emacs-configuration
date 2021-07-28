@@ -2,8 +2,8 @@
 (require 'package)
 
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
-			 ("org" . "https://orgmode.org/elpa/")
-			 ("elpa" . "https://elpa.gnu.org/packages/")))
+                         ("org" . "https://orgmode.org/elpa/")
+                         ("elpa" . "https://elpa.gnu.org/packages/")))
 
 (package-initialize)
 (unless package-archive-contents
@@ -118,8 +118,8 @@
 (setq doom-modeline-major-mode-color-icon t)
 
 (use-package doom-themes
-	:config
-	(load-theme 'doom-palenight t))
+        :config
+        (load-theme 'doom-palenight t))
 
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
@@ -191,6 +191,22 @@
           '(90 . 90) '(100 . 100)))))
 (global-set-key (kbd "C-c t") 'toggle-transparency)
 
+;; Inline images
+
+(setq org-startup-with-inline-images t)
+
+(setq org-image-actual-width nil)
+
+;; Hide source block header and footer
+
+(defun org-hide-src-block-delimiters()
+  (interactive)
+  (save-excursion (goto-char (point-max))
+                  (while (re-search-backward "#\\+BEGIN_SRC\\|#\\+END_SRC" nil t)
+       (let ((ov (make-overlay (line-beginning-position)
+                               (1+ (line-end-position)))))
+         (overlay-put ov 'invisible t)))))
+
 ;; Turn on indentation and auto-fill mode for Org files
 (defun dw/org-mode-setup ()
   (org-indent-mode)
@@ -201,17 +217,17 @@
   :hook (org-mode . dw/org-mode-setup)
   :config
   (setq org-ellipsis " ▾"
-	org-hide-emphasis-markers t)
+        org-hide-emphasis-markers t)
   (setq org-agenda-start-with-log-mode t)
   (setq org-log-done 'time)
   (setq org-log-into-drawer t)
   (setq org-agenda-files
-	'("C:/Users/user/Desktop/emacs/projects/org/test")))
+        '("C:/Users/user/Desktop/emacs/projects/org/test")))
 
 
         (setq org-refile-targets
         '(("Archive.org" :maxlevel . 1)
-	("Tasks.org" :maxlevel . 1)))
+        ("Tasks.org" :maxlevel . 1)))
 
 ;; Save Org buffers refiling:
 (advice-add 'org-refile :after 'org-save-all-org-buffers)
@@ -230,7 +246,7 @@
         (visual-fill-column-mode 1))
 
 (use-package visual-fill-column
-        :hook (org-mode . dw/org-mode-visual-fill))
+      :hook (org-mode . dw/org-mode-visual-fill))
 
 (org-babel-do-load-languages
  'org-babel-load-languages
@@ -448,3 +464,9 @@
   :config
   (evil-collection-define-key 'normal 'dired-mode-map
     "H" 'dired-hide-dotfiles-mode))
+
+(use-package org-tree-slide
+  :custom
+  (org-image-actual-width nil))
+
+(setq default-directory "~/.emacs.d")
